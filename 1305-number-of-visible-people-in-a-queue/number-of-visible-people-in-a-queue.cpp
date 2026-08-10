@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> canSeePersonsCount(vector<int>& heights) {
+        int n = heights.size();
+        stack<int>st;
+        vector<int>que(n);
+        for(int i=n-1;i>=0;i--){
+             int c=0;
+             while(!st.empty() && st.top()<heights[i])
+             {   st.pop();
+                 c++;
+             }
+             if(st.empty())  que[i] = c;
+             else {
+                c++;
+                que[i] = c;
+             }
+            st.push(heights[i]);
+        }
+        return que;
+    }
+};
