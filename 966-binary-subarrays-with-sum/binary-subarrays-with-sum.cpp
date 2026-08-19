@@ -1,36 +1,28 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
-       int n = nums.size();
-       vector<int>idx;
-        if(goal>0){
-        for(int i=0;i<n;i++){
-            if(nums[i]==1){
-               idx.push_back(i);
-            }
-        }
-        int i=0,j=goal-1;
-        int ans = 0;
-        for(j=goal-1;j<idx.size();j++){
-            int x = i==0 ? -1 : idx[i-1];
-            int y = j==idx.size()-1 ? n : idx[j+1];
-            ans = ans + (idx[i]-x)*(y-idx[j]);
-            i++;
-        }
-         return ans;
-}
-   idx.push_back(-1);
-    for(int i=0;i<n;i++){
-            if(nums[i]==1){
-               idx.push_back(i);
-         }
+int fun(vector<int>&arr, int goal){
+    if(goal<0) return 0;
+    int n = arr.size();
+    int l =0,r = 0;
+    int sum =0;
+    int count = 0;
+    while(r<n){
+      sum += arr[r];
+      while(sum>goal){
+        sum-=arr[l];
+        l++;
+      }
+      if(sum<=goal){
+        count += (r-l+1);
+      }
+      r++;
     }
-    idx.push_back(n);
-        int ans = 0;
-        for(int j=1;j<idx.size();j++){
-           int k = (idx[j]-idx[j-1]-1);
-           ans = ans + (k*(k+1))/2;
-        }
-        return ans;
+    return count;
+}
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        int n = nums.size();
+        int prev = fun(nums,goal-1);
+        int curr=  fun(nums,goal);
+      return curr-prev;
     }
 };
