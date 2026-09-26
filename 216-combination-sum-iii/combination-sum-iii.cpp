@@ -1,22 +1,21 @@
 class Solution {
 public:
-  void generate(int i,int n ,int k,vector<int>&temp,vector<vector<int>>&ans){
-     if(n==0 && temp.size()==k) {
+vector<vector<int>>ans;
+void cal(int k,int count, int target, vector<int>&temp){
+    if(0==target && k==0){
         ans.push_back(temp);
         return ;
-     }
-     if(n<0 || temp.size()>k || i>9)
-     return ;
-    
-    temp.push_back(i);
-    generate(i+1,n-i,k,temp,ans);
+    }
+    if(k<=0 || target<0 || count>9) return ;
+    temp.push_back(count);
+    cal(k-1,count+1,target-count,temp);
     temp.pop_back();
-    generate(i+1,n,k,temp,ans);
-  }
+    cal(k,count+1,target,temp);
+
+}
     vector<vector<int>> combinationSum3(int k, int n) {
         vector<int>temp;
-        vector<vector<int>>ans;
-        generate(1,n,k,temp,ans);
+        cal(k,1,n,temp);
         return ans;
     }
 };
