@@ -2,19 +2,21 @@ class ProductOfNumbers {
 public:
 vector<int>arr;
     ProductOfNumbers() {
-        
+
     }
-    
-    void add(int num) {
-        arr.push_back(num);
+   void add(int num) {
+        int n = arr.size();
+        if(n==0) arr.push_back(num);
+        else arr.push_back(arr[n-1]*num);
+        if(num==0) arr.clear();
     }
     
     int getProduct(int k) {
-        int ans = 1;
         int n = arr.size();
-        for(int i=1;i<=k;i++)
-        ans= ans*arr[n-i];
-        return ans;
+        if(k>n) return 0;
+        if(n==k) return arr[n-1];
+        return arr[n-1]/arr[n-k-1];
+        
     }
 };
 
